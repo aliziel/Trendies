@@ -26,14 +26,15 @@ const data:any = {
       borderWidth: 1,
     },
   ],
+  maintainAspectRatio: false
 };
 
 const GraphCenter = () => (
   <>
     <div className='header'>
-      <h1 className='title'>ex. 2</h1>
+      <h1 className='title'>IDK NASDAQ</h1>
     </div>
-    <Pie data={data} type={undefined} />
+    <Pie data={data} type={undefined} height={300} />
   </>
 );
 

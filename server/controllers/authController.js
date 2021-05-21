@@ -75,8 +75,9 @@ authController.logUserIn = (req, res, next) => {
     res.cookie('JWT', newToken, {
       httpOnly: true
     });
-
-    // Move to the next middleware function
+    res.locals.status = 'success', 
+    res.locals.message = 'Successful Login';
+    // Move to the next middleware function 
     return next();
   })
 }

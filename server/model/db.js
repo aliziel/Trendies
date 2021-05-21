@@ -30,7 +30,9 @@ pool.connect()
   .then(result => {
     // List of all required tables to be in the database
     const requiredTables = {
-      users: false
+      users: false,
+      tweet: false,
+      lastUpdated: false,
     };
 
     // Traverse through all tables found from the database

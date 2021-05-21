@@ -8,18 +8,19 @@ import '../App.css';
 function Graphs() {
     return (
       <div id='GraphsContainer'>
-        <div id='GraphLeft'>
-          <GraphLeft />
-        </div>
-        <div id='GraphCenter'>
-          <GraphCenter />
-        </div>
-        <div id='GraphRight'>
-          <GraphRight />
-        </div>
         <div id='GraphLarge'>
           <GraphLarge />
         </div>
+        <div id='GraphLeft'>
+          <GraphLeft />
+        </div>
+        {/* <div id='GraphCenter'>
+          <GraphCenter />
+        </div> */}
+        <div id='GraphRight'>
+          <GraphRight />
+        </div>
+
       </div>
     )
 }

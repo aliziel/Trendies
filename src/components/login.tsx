@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
     
     paper: {
       position: 'absolute',
-      width: 250,
+      width: 300,
       backgroundColor: theme.palette.background.paper,
       border: '1px solid #ffffff',
       boxShadow: theme.shadows[5],
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
 );
 
 const Login = (props:any) => {
-
+  // console.log(props)
   const classes = useStyles();
   const userLoginInput:any = useRef();
   const passLoginInput:any = useRef();
@@ -55,7 +55,7 @@ const Login = (props:any) => {
       userText : undefined,
       passText : undefined,
     };
-    console.log('event: ', e)
+    // console.log('event: ', e)
     if (e.key === 'Enter' || e.type === 'click') {
       
       textFieldObj.userText = userLoginInput.current.value
@@ -66,7 +66,9 @@ const Login = (props:any) => {
 
   const onSuccess = (response:any):void => {
     console.log(response);
-    
+    props.setLoggedIn(true); // sets the isLoggedIn to true
+    console.log('props.isLoggedIn', props.isLoggedIn);
+    // props.isLoggedIn = true;
     handleClose();
   };
 
@@ -84,8 +86,8 @@ const Login = (props:any) => {
   const completeForm = (e:any) => {
 
     const {userText, passText} = getTextFieldValues(e);
-    console.log(userText);
-    console.log(passText);
+    // console.log(userText);
+    // console.log(passText);
     
     const requestBody = {
       method: 'POST',
@@ -99,14 +101,17 @@ const Login = (props:any) => {
     fetch('http://localhost:8080/login', requestBody) 
       .then(response => response.json())
       .then(data =>{
-       
-        console.log(data)
+
         if(data.status === 'success'){
-          handleClose();
-        } 
+          // chg state isLoggedIn
+          // chg state show sidebar
+          onSuccess('successfully logged in');
+          return handleClose();
+        }
         if(data.status === 'fail'){
-          window.alert('no');
-        } 
+          onFailure('failed to log in');
+          // chg state textfield error
+        }
 
       })
       .catch(err => console.log(err))
@@ -143,7 +148,7 @@ const Login = (props:any) => {
   );
   return (
     <div>
-      <button id="loginButton" onClick={handleOpen}>LOG IN</button>
+      <button id="loginButton" onClick={handleOpen} style={{visibility: props.isLoggedIn ? 'hidden' : 'visible'}}>LOG IN</button>
       <Modal
         open={openLogin}
         onClose={handleClose}

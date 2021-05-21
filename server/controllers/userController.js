@@ -39,7 +39,7 @@ userController.createNewUser = (req, res, next) => {
         INSERT INTO users(email_address, user_name, password)
         VALUES ('${emailaddress}', '${username}', '${hash}');
       `;
-
+      console.log('userController', new Date().toLocaleString);
       db.query(createNewUser)
       // When Sucessfully created move to the next middleware function
       .then(result => next())

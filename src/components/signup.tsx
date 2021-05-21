@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
     
     paper: {
       position: 'absolute',
-      width: 250,
+      width: 300,
       backgroundColor: theme.palette.background.paper,
       border: '1px solid #ffffff',
       boxShadow: theme.shadows[5],
@@ -55,7 +55,7 @@ const Signup = (props:any) => {
       userText : undefined,
       passText : undefined,
     };
-    console.log('event: ', e)
+
     if (e.key === 'Enter' || e.type === 'click') {
       
       textFieldObj.emailText = emailSignupInput.current.value
@@ -67,7 +67,9 @@ const Signup = (props:any) => {
 
   const onSuccess = (response:any):void => {
     console.log(response);
-    
+    props.setLoggedIn(true); // sets the isLoggedIn to true
+    console.log('props.isLoggedIn', props.isLoggedIn);
+    // props.isLoggedIn = true;
     handleClose();
   };
 
@@ -99,9 +101,16 @@ const Signup = (props:any) => {
     fetch('http://localhost:8080/signup', requestBody) 
       .then(response => response.json())
       .then(data =>{
-        
-        if (!data.signupFail) handleClose();
-
+        if(data.status === 'success'){
+          // chg state isLoggedIn
+          // chg state show sidebar
+          onSuccess('successfully logged in');
+          return handleClose();
+        }
+        if(data.status === 'fail'){
+          onFailure('failed to log in');
+          // chg state textfield error
+        }
       })
       .catch(err => console.log(err))
   };
@@ -138,8 +147,8 @@ const Signup = (props:any) => {
         </div>
       </form>
       <div className={classes.root}>
-        <Button variant="outlined" color="primary" size="small" onClick={(e)=>completeForm(e)}>SIGN UP</Button>
-        <Button variant="outlined" size="small" onClick={handleClose}>CANCEL</Button>
+        <Button variant="outlined" color="primary" size="small" onClick={(e)=>completeForm(e)} >SIGN UP</Button>
+        <Button variant="outlined" size="small" onClick={handleClose}  >CANCEL</Button>
       </div>
     </div>
   );
@@ -147,7 +156,7 @@ const Signup = (props:any) => {
 
   return (
     <div>
-      <button id="signupButton" onClick={handleOpen}>SIGN UP</button>
+      <button id="signupButton" onClick={handleOpen} style={{visibility: props.isLoggedIn ? 'hidden' : 'visible'}}>SIGN UP</button>
       <Modal
         open={openSignup}
         onClose={handleClose}
