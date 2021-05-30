@@ -49,7 +49,6 @@ app.use((err, req, res, next) => {
 });
 
 // invokes dbController.loop every 15 minutes
-// setInterval(dbController.loop, 900000);
 setInterval(dbController.loop, 5000);
 
 

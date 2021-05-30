@@ -28,7 +28,6 @@
   grid-template-areas:
     "titlelogo titlename signup-login";
   grid-area: navbar;
-  /* background-color: palevioletred; */
 }
 
 #GraphsContainer {
@@ -43,16 +42,13 @@
     ". . . . .";
   grid-area: graphscontainer;
   padding: 0px 20px 20px 0px;
-  /* background-color: plum; */
 }
 
 #GraphLarge { 
   grid-area: graphlarge; 
   width: 90%;
-  /* height: 30%; */
   float:left;
   padding: 10px;
-  /* background-color: lightgreen; */
 }
 
 #GraphLeft { 
@@ -64,16 +60,13 @@
 
 #GraphCenter { 
   grid-area: graphcenter;
-  /* width: 70%; */
   border-radius: 7px;
-  /* background-color: #1d2127; */
 }
 
 #GraphRight { 
   grid-area: graphright; 
   width: 90%;
   padding: 10px;
-  /* background-color: yellow; */
 }
 
 #titleLogo img{ 
@@ -81,7 +74,6 @@
   height: 80px;
   float: right;
   padding: 0px 15px;
-  /* background-color: violet; */
 }
 
 #titleName { 
@@ -89,23 +81,17 @@
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 64px;
   text-align: left;
-  /* background-color: teal; */
 }
 
 #signup-login { 
   grid-area: signup-login; 
-  /* position: relative; */
-  /* top: 45px; */
-  /* background-color: powderblue; */
 }
 
 #Signup {
-  /* display: inline-block; */
   float: right;
 }
 
 #Login {
-  /* display: inline-block; */
   float: right;
   position: relative;
   right: 20px;
@@ -114,7 +100,6 @@
 #sidebar { 
   grid-area: sidebar;
   border-radius: 7px;
-  /* background-color: #1d2127; */
 }
 
 button {

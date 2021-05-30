@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 
-
+// Dynamically center login form modal on page
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -17,6 +17,7 @@ function getModalStyle() {
   };
 };
 
+// Define class-level styling
 const useStyles = makeStyles((theme:Theme) => createStyles({
   
     root: {
@@ -24,11 +25,6 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
         margin: theme.spacing(1),
       },
     },
-    // modal: {
-    //   display: 'flex',
-    //   alignItems: 'center',
-    //   justifyContent: 'center',
-    // },
     
     paper: {
       position: 'absolute',
@@ -41,21 +37,23 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
   }),
 );
 
+// Login form modal functionality
 const Login = (props:any) => {
-  // console.log(props)
   const classes = useStyles();
   const userLoginInput:any = useRef();
   const passLoginInput:any = useRef();
 
-  const [modalStyle] = React.useState(getModalStyle);
+  // Initialize display state of login form modal in response to user click interaction
   const [openLogin, setShow] = React.useState(false);
+  const [modalStyle] = React.useState(getModalStyle);
 
+  // Reference user inputs from text fields via useRef hooks
   const getTextFieldValues = (e:any) => {
     const textFieldObj = {
       userText : undefined,
       passText : undefined,
     };
-    // console.log('event: ', e)
+    
     if (e.key === 'Enter' || e.type === 'click') {
       
       textFieldObj.userText = userLoginInput.current.value
@@ -64,31 +62,37 @@ const Login = (props:any) => {
     return textFieldObj
   };
 
+  // State changes when login process is successful
   const onSuccess = (response:any):void => {
-    console.log(response);
-    props.setLoggedIn(true); // sets the isLoggedIn to true
-    console.log('props.isLoggedIn', props.isLoggedIn);
-    // props.isLoggedIn = true;
+    // Set isLoggedIn state to true
+    props.setLoggedIn(true); 
+    // Close login form modal
     handleClose();
   };
 
   const onFailure = (response:any):void => {
     console.error(response);
   }
+
+  // Open login form modal
   const handleOpen = () => {
+    // Change display state of login form modal
     setShow(true);
   };
 
+  // Close login form modal
   const handleClose = () => {
+    //  Change display state of login form modal
     setShow(false);
   };
 
+  // Post login request to server for backend validation
   const completeForm = (e:any) => {
 
+    // Isolate user-provided inputs
     const {userText, passText} = getTextFieldValues(e);
-    // console.log(userText);
-    // console.log(passText);
     
+    // Set request body and headers
     const requestBody = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -98,25 +102,24 @@ const Login = (props:any) => {
       })
     }
 
+    // Initialize http request and handle responses or request errors
     fetch('http://localhost:8080/login', requestBody) 
       .then(response => response.json())
       .then(data =>{
 
         if(data.status === 'success'){
-          // chg state isLoggedIn
-          // chg state show sidebar
+          // Initiate login status state change
           onSuccess('successfully logged in');
           return handleClose();
         }
         if(data.status === 'fail'){
           onFailure('failed to log in');
-          // chg state textfield error
         }
-
       })
       .catch(err => console.log(err))
   };
 
+  // Login form modal layout
   const loginBody = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="loginTitle">Log In</h2>
@@ -152,7 +155,6 @@ const Login = (props:any) => {
       <Modal
         open={openLogin}
         onClose={handleClose}
-        // className = {classes.modal}
       >
         {loginBody}
       </Modal>

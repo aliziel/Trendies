@@ -5,7 +5,7 @@ require("dotenv").config();
 const dbController = {};
 
 dbController.loop = () => {
-  console.log("dbController.loop", new Date().toLocaleString());
+  console.log(new Date().toLocaleString());
   dbController.query("stocks trending");
 };
 
@@ -15,7 +15,7 @@ dbController.query = async (query) => {
 
   // outputs query and result
   console.log("query: ", query, "\t", new Date().toLocaleString());
-  console.log("dbController.query result length", result.length);
+  // console.log("dbController.query result length", result.length);
   dbController.insert(result);
 };
 

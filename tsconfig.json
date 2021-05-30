@@ -28,7 +28,7 @@
   "include": [
     "./src",
     "./server"
-  ],
+, "__test__/App.test.tsx"  ],
   "exclude": [
     "node_modules",
     "build"

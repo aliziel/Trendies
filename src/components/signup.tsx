@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
 
+// Dynamically center signup form modal on page
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -16,39 +17,36 @@ function getModalStyle() {
   };
 };
 
+// Define class-level styling
 const useStyles = makeStyles((theme:Theme) => createStyles({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
   
-    root: {
-      '& > *': {
-        margin: theme.spacing(1),
-      },
-    },
-    // modal: {
-    //   display: 'flex',
-    //   alignItems: 'center',
-    //   justifyContent: 'center',
-    // },
-    
-    paper: {
-      position: 'absolute',
-      width: 300,
-      backgroundColor: theme.palette.background.paper,
-      border: '1px solid #ffffff',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-  }),
-);
+  paper: {
+    position: 'absolute',
+    width: 300,
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ffffff',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
 
+// Signup form modal functionality
 const Signup = (props:any) => {
   const classes = useStyles();
   const emailSignupInput:any = useRef();
   const userSignupInput:any = useRef();
   const passSignupInput:any = useRef();
 
-  const [modalStyle] = React.useState(getModalStyle);
+  // Initialize display state of signup form modal in response to user click interaction
   const [openSignup, setShow] = React.useState(false);
+  const [modalStyle] = React.useState(getModalStyle);
 
+  // Reference user inputs from text fields via useRef hooks
   const getTextFieldValues = (e:any) => {
     const textFieldObj = {
       emailText : undefined,
@@ -65,29 +63,37 @@ const Signup = (props:any) => {
     return textFieldObj
   };
 
+  // State changes when signup process is successful
   const onSuccess = (response:any):void => {
-    console.log(response);
-    props.setLoggedIn(true); // sets the isLoggedIn to true
-    console.log('props.isLoggedIn', props.isLoggedIn);
-    // props.isLoggedIn = true;
+    // Set isLoggedIn state to true
+    props.setLoggedIn(true); 
+    // Close signup form modal
     handleClose();
   };
 
   const onFailure = (response:any):void => {
     console.error(response);
   }
+
+  // Open signup form modal
   const handleOpen = () => {
+    // Change display state of signup form modal
     setShow(true);
   };
 
+  // Close signup form modal
   const handleClose = () => {
+    //  Change display state of signup form modal
     setShow(false);
   };
 
+  // Post signup request to server for backend validation
   const completeForm = (e:any) => {
 
+    // Isolate user-provided inputs
     const {emailText, userText, passText} = getTextFieldValues(e);
     
+    // Set request body and headers
     const requestBody = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -96,25 +102,25 @@ const Signup = (props:any) => {
         "username": userText,
         "password": passText
       })
-    }
+    };
 
+    // Initialize http request and handle responses or request errors
     fetch('http://localhost:8080/signup', requestBody) 
       .then(response => response.json())
       .then(data =>{
         if(data.status === 'success'){
-          // chg state isLoggedIn
-          // chg state show sidebar
+          // Initiate login status state change
           onSuccess('successfully logged in');
           return handleClose();
         }
         if(data.status === 'fail'){
           onFailure('failed to log in');
-          // chg state textfield error
         }
       })
       .catch(err => console.log(err))
   };
 
+  // Signup form modal layout 
   const signupBody = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="signupTitle">Sign Up</h2>
@@ -160,7 +166,6 @@ const Signup = (props:any) => {
       <Modal
         open={openSignup}
         onClose={handleClose}
-        // className = {classes.modal}
       >
         {signupBody}
       </Modal>

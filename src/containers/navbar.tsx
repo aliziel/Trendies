@@ -7,12 +7,8 @@ import '../App.css';
 
 function Navbar() {
 
+  // login state will (de)activate login/signup buttons and sidebar
   const [isLoggedIn, setLoggedIn] = React.useState(false);
-
-  const handleVis = () => {
-    if(isLoggedIn) return "hidden";
-    return "visible";
-  }
 
   return (
     <div id ='navbar'>
